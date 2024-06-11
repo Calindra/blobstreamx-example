@@ -15,6 +15,7 @@ func main() {
 	// step 0. get eth-rpc and trpc endpoint
 	ethEndpoint := "https://arbitrum-sepolia-rpc.publicnode.com"
 	trpcEndpoint := "https://celestia-mocha-rpc.publicnode.com:443"
+	// trpcEndpoint := "https://rpc.celestia-mocha.com"
 
 	// See contract here: https://sepolia.arbiscan.io/contract/0xf2787995D9eb43b57eAdB361227Ddf4FEC99b5Df
 	// This is the address of the ShareLoader contract
@@ -34,10 +35,15 @@ func main() {
 
 	// step 2: generate share proof
 	sp := &client.SharePointer{
-		Height: 1490181,
-		Start:  1,
-		End:    14,
+		Height: 2027691,
+		Start:  0,
+		End:    1,
 	}
+	// sp := &client.SharePointer{
+	// 	Height: 1490181,
+	// 	Start:  1,
+	// 	End:    14,
+	// }
 
 	proof, root, err := client.GetShareProof(eth, trpc, sp)
 	if err != nil {

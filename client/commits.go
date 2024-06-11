@@ -20,7 +20,7 @@ const maxFilterRange = uint64(10_000)
 //
 //	dataCommitment, err := GetDataCommitment(eth, 10000, 90_000 )
 //
-// Please note this method will make atleast blocks/maxFilterRange calls to the
+// Please note this method will make at least blocks/maxFilterRange calls to the
 // Ethereum node
 func GetDataCommitment(eth *ethclient.Client, height int64, blocks uint64) (*blobstreamx.BlobstreamXDataCommitmentStored, error) {
 	ctx := context.Background()
@@ -76,13 +76,19 @@ func findMatchingDataCommitment(contract *blobstreamx.BlobstreamX, start uint64,
 	}
 	defer events.Close()
 
+	fmt.Printf("Events start %d; end %d;\n", start, end)
+
+	count := 0
 	// loop through events and return the first matching event
 	for events.Next() {
 		e := events.Event
+		count += 1
 		if int64(e.StartBlock) <= height && height < int64(e.EndBlock) {
+			fmt.Printf("Events count %d\n", count)
 			return e, nil
 		}
+		fmt.Printf("Events height %d; StartBlock %d; EndBlock %d;\n", height, e.StartBlock, e.EndBlock)
 	}
-
+	fmt.Printf("Events not found; count %d\n", count)
 	return nil, nil
 }
