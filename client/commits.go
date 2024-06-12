@@ -84,10 +84,16 @@ func findMatchingDataCommitment(contract *blobstreamx.BlobstreamX, start uint64,
 		e := events.Event
 		count += 1
 		if int64(e.StartBlock) <= height && height < int64(e.EndBlock) {
-			fmt.Printf("Events count %d\n", count)
+			fmt.Printf("Found height %d; StartBlock %d; EndBlock %d; %s\n",
+				height, e.StartBlock, e.EndBlock,
+				common.Bytes2Hex(e.DataCommitment[:]),
+			)
 			return e, nil
 		}
-		fmt.Printf("Events height %d; StartBlock %d; EndBlock %d;\n", height, e.StartBlock, e.EndBlock)
+		fmt.Printf("Events height %d; StartBlock %d; EndBlock %d; %s\n",
+			height, e.StartBlock, e.EndBlock,
+			common.Bytes2Hex(e.DataCommitment[:]),
+		)
 	}
 	fmt.Printf("Events not found; count %d\n", count)
 	return nil, nil

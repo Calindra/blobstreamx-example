@@ -51,6 +51,9 @@ func GetShareProof(eth *ethclient.Client, trpc *http.HTTP, sp *SharePointer) (*s
 
 	blockDataRoot := [32]byte(blockRes.Block.DataHash)
 
+	fmt.Printf("Len is %d\n", len(shareProof.ShareProofs))
+	fmt.Printf("Start is %d\n", shareProof.ShareProofs[0].Start)
+
 	return &shareloader.SharesProof{
 		Data:             shareProof.Data,
 		ShareProofs:      toNamespaceMerkleMultiProofs(shareProof.ShareProofs),
